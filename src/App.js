@@ -4,8 +4,11 @@ import NewGameComponent from './components/NewGameComponent';
 import GameList from './components/GameList';
 
 class App extends React.Component {
-  constructor(){
+  constructor() {
     super();
+
+    this.games = new GameModel();
+    this.games.subscribe(this.updateList.bind(this));
 
     this.state = {
       games: [],
@@ -13,54 +16,48 @@ class App extends React.Component {
     };
   }
 
-  componentDidMount(){
-    this.games = new GameModel();
-    this.games.subscribe(this.updateList.bind(this));
-
-  }
-
-  updateList(){
+  updateList() {
     this.setState({
       games: this.games.resources
     });
   }
 
-  createGame(newPlayer){
+  createGame(newPlayer) {
     this.games.addResource({
       playerOne: newPlayer
     });
   }
 
-  containerStyles(){
-    return{
+  containerStyles() {
+    return {
       width: "500px",
       height: "500px",
-      margin: "auto"
+      margin: "auto",
     };
   }
 
-  selectGame(gameId){
-    this.games.getResource({_id: gameId});
-    this.setState({
-      currentGame: gameId
-    });
-  }
-
-  headerStyle(){
-    return{
+  headerStyle() {
+    return {
       textAlign: "center"
     };
   }
-    render() {
-      console.log(this.state);
-        return (
-          <div style={this.headerStyle()}>
-            <h1 style={this.containerStyles()}>Rock | Paper | Scissors</h1>
-            <NewGameComponent onCreate={this.createGame.bind(this)}/>
-            <GameList games={this.state.games} onSelect={this.selectGame.bind(this)} />
-          </div>
-        );
-    }
+
+  selectGame(game) {
+    this.setState({
+      currentGame: game
+    });
+  }
+
+  render() {
+    console.log(this.state);
+    return (
+      <div style={this.containerStyles()}>
+        <h1 style={this.headerStyle()}>Rock Paper Scissors</h1>
+        <NewGameComponent onCreate={this.createGame.bind(this)}/>
+        <GameList games={this.state.games} onSelect={this.selectGame.bind(this)}/>
+      </div>
+    );
+  }
 }
 
 export default App;

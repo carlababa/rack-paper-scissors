@@ -1,33 +1,18 @@
 import React from 'react';
+import GameListItem from './GameListItem';
 
-class GameList extends React.Component{
-  constructor(){
-    super();
-
-    this.state = {
-      games: []
-    };
+class GameList extends React.Component {
+  selectGame(game) {
+    this.props.onSelect(game);
   }
 
-  selectGame(event){
-    let gameId = event.currentTarget.id;
-    this.props.onSelect(gameId);
-
-  }
-
-  componentDidMount(){
-    this.setState({
-      games: this.props.games
-    });
-  }
-
-  render(){
+  render() {
     let component = this;
-    return(
+    return (
       <ul>
-      {this.props.games.map(function(game){
-        return <li id={game._id} key={game._id} onClick={component.selectGame.bind(component)}>Game by {game.playerOne}</li>
-      }) }
+        {this.props.games.map(function(game) {
+          return (<GameListItem key={game._id} game={game} onClick={component.selectGame.bind(component)}/>);
+        })}
       </ul>
     );
   }
