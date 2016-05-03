@@ -11,7 +11,7 @@ class GameList extends React.Component {
     return (
       <ul>
         {this.props.games.map(function(game) {
-          return (<GameListItem key={game._id} game={game} onClick={component.selectGame.bind(component)}/>);
+          return (<GameListItem key={game._id} game={game} currentPlayer={component.props.currentPlayer} onClick={component.selectGame.bind(component)}/>);
         })}
       </ul>
     );

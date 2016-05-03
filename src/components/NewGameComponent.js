@@ -1,24 +1,19 @@
 import React from 'react';
+import RaisedButton from 'material-ui/lib/raised-button';
 
 class NewGameComponent extends React.Component {
-  createGame(event){
+  createGame(event) {
     event.preventDefault();
     console.log("Create Game Called!");
-    let newPlayer = this.refs.playerName.value;
-    this.props.onCreate(newPlayer);
-    this.refs.playerName.value = "";
+    this.props.onCreate();
   }
 
-  render(){
+  render() {
     return(
       <div>
         <form onSubmit={this.createGame.bind(this)}>
           <div>
-            <label>Player Name:</label>
-            <input type="text" ref="playerName" placeholder="What's your name?" />
-          </div>
-          <div>
-            <input type="submit" value="Create New Game" />
+            <RaisedButton type="submit" label="Create New Game" primary={true} />
           </div>
         </form>
       </div>
